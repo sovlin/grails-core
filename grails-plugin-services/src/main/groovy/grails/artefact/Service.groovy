@@ -1,8 +1,3 @@
-package org.grails.cli.profile.commands.factory
-
-import org.grails.cli.profile.Command
-import org.grails.cli.profile.Profile
-
 /*
  * Copyright 2014 original authors
  *
@@ -18,23 +13,16 @@ import org.grails.cli.profile.Profile
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package grails.artefact
+
+import grails.events.Events
+
 
 /**
- * Factory for the creation of {@link Command} instances
+ * A trait implemented by all services
  *
  * @author Graeme Rocher
  * @since 3.0
  */
-interface CommandFactory {
-
-    /**
-     * Creates a command for the given name
-     *
-     * @param name The name of the command
-     * @param profile The {@link Profile}
-     * @param inherited Whether the profile passed is inherited (ie a parent profile)
-     * @return A command or null if it wasn't possible to create one
-     */
-    Collection<Command> findCommands( Profile profile, boolean inherited )
-
+trait Service extends Events {
 }
