@@ -32,7 +32,7 @@ ext {
     datastoreVersion = "4.0.0.M1"
     gantVersion = "1.9.6"
     gdocEngineVersion = "1.0.1"
-    groovyVersion = "2.4.0"
+    groovyVersion = "2.4.1"
     ivyVersion = "2.3.0"
     jansiVersion = "1.11"
     jlineVersion = "2.12"
@@ -43,7 +43,7 @@ ext {
     springLoadedVersion = "1.2.1.RELEASE"
     springBootVersion = "1.2.1.RELEASE"
     springLoadedCommonOptions = "-Xverify:none -Dspringloaded.synchronize=true -Djdk.reflect.allowGetCallerClass=true"
-    springVersion = "4.1.4.RELEASE"
+    springVersion = "4.1.5.RELEASE"
     ehcacheVersion = "2.4.6"
     junitVersion = "4.12"
     concurrentlinkedhashmapVersion = "1.4"
@@ -472,6 +472,6 @@ tciTrigger {
 }
 
 task wrapper(type: Wrapper) {
-    gradleVersion = '2.3-rc-3'
+    gradleVersion = '2.3'
     jarFile = 'gradle/wrapper/gradle-wrapper.jar'
 }

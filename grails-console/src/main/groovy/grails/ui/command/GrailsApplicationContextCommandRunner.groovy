@@ -18,6 +18,8 @@ package grails.ui.command
 import grails.dev.commands.ApplicationContextCommandRegistry
 import grails.ui.support.DevelopmentGrailsApplication
 import groovy.transform.CompileStatic
+import org.grails.build.parsing.CommandLine
+import org.grails.build.parsing.CommandLineParser
 import org.springframework.context.ConfigurableApplicationContext
 
 
@@ -49,7 +51,8 @@ class GrailsApplicationContextCommandRunner extends DevelopmentGrailsApplication
             }
 
             try {
-                def result = command.handle(ctx)
+                CommandLine commandLine = new CommandLineParser().parse(args)
+                def result = command.handle(ctx, commandLine)
                 result ? System.exit(0) : System.exit(1)
             } catch (Throwable e) {
                 System.err.println("Command execution error: $e.message")
@@ -73,20 +76,20 @@ class GrailsApplicationContextCommandRunner extends DevelopmentGrailsApplication
     /**
      * Main method to run an existing Application class
      *
-     * @param args The first argument is the Application class name
+     * @param args The first argument is the Command name, the last argument is the Application class name
      */
     public static void main(String[] args) {
         if(args.size() > 1) {
             Class applicationClass
             try {
-                applicationClass = Thread.currentThread().contextClassLoader.loadClass(args[1])
+                applicationClass = Thread.currentThread().contextClassLoader.loadClass(args.last())
             } catch (Throwable e) {
                 System.err.println("Application class not found")
                 System.exit(1)
             }
 
             def runner = new GrailsApplicationContextCommandRunner(args[0], applicationClass)
-            runner.run(args[1..-1] as String[])
+            runner.run((args.size() > 2 ? args[1..-2] : []) as String[])
         }
         else {
             System.err.println("Missing application class name and script name arguments")

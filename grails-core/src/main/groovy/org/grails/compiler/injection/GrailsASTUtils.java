@@ -715,6 +715,40 @@ public class GrailsASTUtils {
         return false;
     }
 
+
+    public static boolean isSubclassOfOrImplementsInterface(ClassNode childClass, ClassNode superClass) {
+        String superClassName = superClass.getName();
+        return isSubclassOfOrImplementsInterface(childClass, superClassName);
+    }
+
+    public static boolean isSubclassOfOrImplementsInterface(ClassNode childClass, String superClassName) {
+        return isSubclassOf(childClass, superClassName) || implementsInterface(childClass, superClassName);
+    }
+
+    private static boolean implementsInterface(ClassNode classNode, String interfaceName) {
+        ClassNode currentClassNode = classNode;
+        while (currentClassNode != null && !currentClassNode.getName().equals(OBJECT_CLASS)) {
+            ClassNode[] interfaces = currentClassNode.getInterfaces();
+            if (implementsInterfaceInternal(interfaces, interfaceName)) return true;
+            currentClassNode = currentClassNode.getSuperClass();
+        }
+        return false;
+    }
+
+    private static boolean implementsInterfaceInternal(ClassNode[] interfaces, String interfaceName) {
+        for (ClassNode anInterface : interfaces) {
+            if(anInterface.getName().equals(interfaceName)) {
+                return true;
+            }
+            ClassNode[] childInterfaces = anInterface.getInterfaces();
+            if(childInterfaces != null && childInterfaces.length>0) {
+                return implementsInterfaceInternal(childInterfaces,interfaceName );
+            }
+
+        }
+        return false;
+    }
+
     public static boolean isCandidateMethod(MethodNode declaredMethod) {
         return !declaredMethod.isSynthetic() &&
                 !declaredMethod.getName().contains("$")

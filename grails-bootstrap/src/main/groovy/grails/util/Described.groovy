@@ -13,29 +13,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.grails.cli.interactive.completers
 
-import grails.util.BuildSettings
-import groovy.transform.CompileStatic
-import org.grails.io.support.Resource
-
+package grails.util
 
 
 /**
- * A completer that completes the names of the tests in the project
+ * Interface for classes that are described
  *
  * @author Graeme Rocher
  * @since 3.0
  */
-@CompileStatic
-class TestsCompleter  extends ClassNameCompleter {
-    TestsCompleter() {
-        super(new File(BuildSettings.BASE_DIR, "src/test/groovy"), new File(BuildSettings.BASE_DIR, "src/integration-test/groovy"))
-    }
+interface Described {
 
-    @Override
-    boolean isValidResource(Resource resource) {
-        def fn = resource.filename
-        fn.endsWith('Spec.groovy') || fn.endsWith('Tests.groovy')
-    }
+    /**
+     * @return The description
+     */
+    String getDescription()
+
 }

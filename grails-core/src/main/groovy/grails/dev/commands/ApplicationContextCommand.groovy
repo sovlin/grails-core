@@ -15,7 +15,10 @@
  */
 package grails.dev.commands
 
+import grails.util.Described
+import grails.util.GrailsNameUtils
 import grails.util.Named
+import org.grails.build.parsing.CommandLine
 import org.springframework.context.ConfigurableApplicationContext
 
 
@@ -26,14 +29,25 @@ import org.springframework.context.ConfigurableApplicationContext
  * @author Graeme Rocher
  * @since 3.0
  */
-interface ApplicationContextCommand extends Named {
+trait ApplicationContextCommand implements Named, Described {
+
+    @Override
+    String getName() {
+        return GrailsNameUtils.getScriptName( GrailsNameUtils.getLogicalName(getClass().getName(),"Command") )
+    }
+
+    @Override
+    String getDescription() {
+        getName()
+    }
 
     /**
      * Handles the command
      *
      * @param applicationContext The {@link org.springframework.context.ApplicationContext} instance
+     * @param args the command arguments
      * @return True if the command was successful
      */
-    boolean handle(ConfigurableApplicationContext applicationContext)
+    abstract boolean handle(ConfigurableApplicationContext applicationContext, CommandLine commandLine)
 
 }

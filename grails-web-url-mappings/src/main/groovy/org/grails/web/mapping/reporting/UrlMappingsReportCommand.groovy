@@ -21,6 +21,7 @@ import grails.web.mapping.reporting.UrlMappingsRenderer
 import groovy.transform.CompileStatic
 import groovy.transform.EqualsAndHashCode
 import groovy.util.logging.Commons
+import org.grails.build.parsing.CommandLine
 import org.springframework.context.ConfigurableApplicationContext
 
 
@@ -36,10 +37,10 @@ import org.springframework.context.ConfigurableApplicationContext
 @Commons
 class UrlMappingsReportCommand implements ApplicationContextCommand {
 
-    final String name = "url-mappings-report"
+    final String description = "Prints out a report of the project's URL mappings"
 
     @Override
-    boolean handle(ConfigurableApplicationContext applicationContext) {
+    boolean handle(ConfigurableApplicationContext applicationContext, CommandLine commandLine) {
         try {
             def urlMappings = applicationContext.getBean("grailsUrlMappingsHolder", UrlMappings)
 
